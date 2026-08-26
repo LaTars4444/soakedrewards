@@ -9,6 +9,8 @@ generator client {
 model User {
   id               String    @id @default(cuid())
   username         String    @unique
+  email            String    @unique
+  passwordHash     String
   avatar           String?
   totalWagered          Float     @default(0)
   weeklyWagered         Float     @default(0)
@@ -24,8 +26,33 @@ model User {
 
   rewards          Reward[]
   watchTimeEntries WatchTime[]
+  sessions         Session[]
+  wagers           Wager[]
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Wager {
+  id         String   @id @default(cuid())
+  externalId String?  @unique
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount     Float
+  status     String   @default("settled")
+  placedAt   DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId, placedAt])
 }
 
 model Reward {

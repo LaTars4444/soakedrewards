@@ -44,15 +44,17 @@ export default function RootLayout({
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] font-semibold text-[var(--text-primary)]">Partners</p>
                   <div className="mt-4 flex flex-col gap-2 text-sm">
-                    <a href="#" className="transition hover:text-[var(--accent-color)]">HellCasino</a>
+                    <a href="https://hellcasino.com/?r=Vinzzur" target="_blank" rel="noreferrer" className="transition hover:text-[var(--accent-color)]">HellCasino</a>
                   </div>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] font-semibold text-[var(--text-primary)]">Social</p>
                   <div className="mt-4 flex flex-col gap-2 text-sm">
-                    <a href="https://discord.gg/TQeKGwfe28" target="_blank" rel="noreferrer" className="transition hover:text-[var(--accent-color)]">Discord</a>
-                    <a href="#" className="transition hover:text-[var(--accent-color)]">Twitter</a>
-                    <a href="#" className="transition hover:text-[var(--accent-color)]">Twitch</a>
+                    <a href="https://discord.gg/tCwMsPp3c9" target="_blank" rel="noreferrer" className="transition hover:text-[var(--accent-color)]">Discord</a>
+                    <a href="https://x.com/bigsoaked?s=11" target="_blank" rel="noreferrer" className="transition hover:text-[var(--accent-color)]">Bigsoaked X</a>
+                    <a href="https://x.com/vinnzzurr?s=11" target="_blank" rel="noreferrer" className="transition hover:text-[var(--accent-color)]">Vinzzur X</a>
+                    <a href="https://kick.com/bigsokkd" target="_blank" rel="noreferrer" className="transition hover:text-[var(--accent-color)]">Kick</a>
+                    <a href="" className="transition hover:text-[var(--accent-color)]">Twitch</a>
                   </div>
                 </div>
                 <div>

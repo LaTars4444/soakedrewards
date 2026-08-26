@@ -79,7 +79,7 @@ export default function NavBar() {
           )}
         </div>
 
-        <a href="https://discord.gg/TQeKGwfe28" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--surface-color)]/95 px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-[var(--text-primary)] transition hover:border-[var(--accent-color)] hover:text-[var(--accent-color)]">
+        <a href="https://discord.gg/tCwMsPp3c9" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--surface-color)]/95 px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-[var(--text-primary)] transition hover:border-[var(--accent-color)] hover:text-[var(--accent-color)]">
           Discord
         </a>
       </div>

@@ -11,7 +11,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !email || !password || !confirmPassword) {
       setError("Username, email, and password are required.");
@@ -23,23 +23,12 @@ export default function RegisterPage() {
       return;
     }
 
-    const user = {
-      username,
-      email,
-      password,
-      tokens: 0,
-      bonusBalance: 0,
-      totalWagered: 0,
-      weeklyWagered: 0,
-      monthlyWagered: 0,
-      lifetimeWagered: 0,
-      lifetimeTokenCredits: 0,
-      avatar: "/avatars/avatar1.svg",
-      xp: 0,
-      hellCasinoId: "",
-    };
-
-    window.localStorage.setItem("wildcs_user", JSON.stringify(user));
+    const response = await fetch("/api/auth/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, email, password }) });
+    const result = await response.json();
+    if (!response.ok) {
+      setError(result.error ?? "Unable to create account.");
+      return;
+    }
     router.push("/profile");
   };
 

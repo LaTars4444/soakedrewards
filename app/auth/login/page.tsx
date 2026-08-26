@@ -4,37 +4,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const raw = window.localStorage.getItem("wildcs_user");
-    if (!raw) {
-      setError("No account found. Please register first.");
+    const response = await fetch("/api/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ identifier, password }) });
+    const result = await response.json();
+    if (!response.ok) {
+      setError(result.error ?? "Unable to log in.");
       return;
     }
-
-    try {
-      const user = JSON.parse(raw);
-      if (user.username !== username) {
-        setError("Username does not match stored account.");
-        return;
-      }
-
-      if (!user.password || user.password !== password) {
-        setError("Invalid password.");
-        return;
-      }
-
-      window.localStorage.setItem("wildcs_user", JSON.stringify(user));
-      router.push("/profile");
-    } catch {
-      setError("Unable to read stored account.");
-    }
+    router.push("/profile");
   };
 
   return (
@@ -44,9 +27,9 @@ export default function LoginPage() {
           <h1 className="text-2xl font-black">Log in</h1>
           <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
             <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Username"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              placeholder="Email or username"
               className="rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-3 text-[var(--text-primary)] outline-none"
             />
             <input
