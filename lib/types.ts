@@ -1,4 +1,4 @@
-export type Period = "daily" | "weekly" | "monthly" | "all";
+export type Period = "all";
 
 export interface User {
   id: string;
@@ -14,9 +14,8 @@ export interface User {
   watchTime: number;
   vipTier: string;
   streakDays: number;
-  clashId?: string;
-  chipsId?: string;
-  daddySkinsId?: string;
+  xp?: number;
+  hellCasinoId?: string;
 }
 
 export interface Reward {

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -12,8 +13,8 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !password || !confirmPassword) {
-      setError("Username and password are required.");
+    if (!username || !email || !password || !confirmPassword) {
+      setError("Username, email, and password are required.");
       return;
     }
 
@@ -24,6 +25,7 @@ export default function RegisterPage() {
 
     const user = {
       username,
+      email,
       password,
       tokens: 0,
       bonusBalance: 0,
@@ -32,12 +34,9 @@ export default function RegisterPage() {
       monthlyWagered: 0,
       lifetimeWagered: 0,
       lifetimeTokenCredits: 0,
-      linkedKick: false,
       avatar: "/avatars/avatar1.svg",
       xp: 0,
-      clashId: "",
-      chipsId: "",
-      daddySkinsId: "",
+      hellCasinoId: "",
     };
 
     window.localStorage.setItem("wildcs_user", JSON.stringify(user));
@@ -54,6 +53,14 @@ export default function RegisterPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Choose a username"
+              className="rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-3 text-[var(--text-primary)] outline-none"
+            />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email address"
+              required
               className="rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-3 text-[var(--text-primary)] outline-none"
             />
             <input

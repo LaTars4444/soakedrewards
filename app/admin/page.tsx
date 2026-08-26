@@ -58,6 +58,26 @@ export default function AdminPage() {
     const raw = window.localStorage.getItem("wildcs_pending_claims");
     return raw ? JSON.parse(raw) : [];
   });
+  const [coinAmount, setCoinAmount] = useState(100);
+  const [coinMessage, setCoinMessage] = useState<string | null>(null);
+
+  const addVinzzurBucks = () => {
+    if (!Number.isFinite(coinAmount) || coinAmount <= 0) return;
+    const raw = window.localStorage.getItem("wildcs_user");
+    if (!raw) {
+      setCoinMessage("No signed-in player account is available.");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(raw);
+      user.tokens = (user.tokens || 0) + Math.floor(coinAmount);
+      window.localStorage.setItem("wildcs_user", JSON.stringify(user));
+      setCoinMessage(`${Math.floor(coinAmount).toLocaleString()} VinzzurBucks added to ${user.username}.`);
+    } catch {
+      setCoinMessage("Unable to update the player account.");
+    }
+  };
 
   const refreshPending = () => {
     const raw = window.localStorage.getItem("wildcs_pending_claims");
@@ -162,6 +182,15 @@ export default function AdminPage() {
           Sign out
         </button>
       </div>
+      <div className="mt-8 border border-[var(--border-color)] bg-[var(--elevated-color)]/35 p-5">
+        <h2 className="text-xl font-black">Add VinzzurBucks</h2>
+        <p className="mt-2 text-sm text-[var(--text-secondary)]">Grant coins to the currently signed-in player account for testing or manual adjustments.</p>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <input type="number" min="1" step="1" value={coinAmount} onChange={(event) => setCoinAmount(Number(event.target.value))} className="w-40 rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-2 text-[var(--text-primary)]" aria-label="VinzzurBucks amount" />
+          <button type="button" onClick={addVinzzurBucks} className="rounded-full bg-[var(--accent-color)] px-4 py-2 font-semibold text-black">Add bucks</button>
+        </div>
+        {coinMessage && <p className="mt-3 text-sm text-[var(--text-secondary)]">{coinMessage}</p>}
+      </div>
       <div className="mt-8">
         <h2 className="text-xl font-black">Pending Claims</h2>
         <div className="mt-4 space-y-3">
@@ -172,7 +201,7 @@ export default function AdminPage() {
               <div key={p.id} className="flex items-center justify-between rounded-md border p-3">
                 <div>
                   <div className="font-medium">{p.username}</div>
-                  <div className="text-sm text-[var(--text-secondary)]">{p.amount} tokens — {new Date(p.createdAt).toLocaleString()}</div>
+                  <div className="text-sm text-[var(--text-secondary)]">{p.amount} VinzzurBucks — {new Date(p.createdAt).toLocaleString()}</div>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => approve(p.id)} className="rounded-md bg-green-500 px-3 py-1 text-sm text-black">Approve</button>

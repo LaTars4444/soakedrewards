@@ -35,23 +35,15 @@ export default function NavBar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Link href="/" className="group flex items-center gap-3">
-            <div className="relative h-12 w-12 overflow-hidden rounded-2xl border-[3px] border-[var(--border-color)] bg-[var(--surface-color)] shadow-[6px_6px_0_rgba(0,0,0,0.3)] transition duration-300 group-hover:border-[var(--accent-color)]">
-              <Image src="/logo.png" alt="WildCS logo" className="h-full w-full object-cover p-1" fill sizes="48px" />
-            </div>
-            <div className="flex flex-col -rotate-[2deg] transition duration-300 group-hover:rotate-0">
-              <span className="text-xl font-black italic uppercase tracking-tighter text-[var(--text-primary)] drop-shadow-[0_0_20px_rgba(124,58,237,0.35)] sm:text-2xl">
-                WILDCS
-              </span>
-              <span className="mt-1 inline-block rounded-sm bg-[var(--accent-color)] px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.22em] text-black">
-                OFFICIAL
-              </span>
-            </div>
+            <span className="text-xl font-black uppercase tracking-[0.08em] text-[var(--text-primary)] transition group-hover:text-[var(--accent-color)] sm:text-2xl">
+              Vinzzur Rewards
+            </span>
           </Link>
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
           <Link href="/leaderboard" className="inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--surface-color)]/95 px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-[var(--text-primary)] transition hover:border-[var(--accent-color)] hover:text-[var(--accent-color)]">
-            Leaderboard
+            HellCasino LB
           </Link>
           <Link href="/profile" className="inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--surface-color)]/95 px-4 py-3 text-sm uppercase tracking-[0.18em] text-[var(--text-secondary)] transition hover:border-[var(--accent-color)] hover:text-[var(--text-primary)]">
             Profile
@@ -62,7 +54,7 @@ export default function NavBar() {
           {user ? (
             <div className="flex items-center gap-3 rounded-full border border-[var(--border-color)] bg-[var(--surface-color)]/95 px-3 py-2">
               <div className="hidden items-center gap-2 rounded-full bg-[var(--bg-color)]/95 px-3 py-2 text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)] sm:flex">
-                <span>{user.tokens.toLocaleString()} Tokens</span>
+                <span>{user.tokens.toLocaleString()} VinzzurBucks</span>
                 <span className="h-1 w-1 rounded-full bg-[var(--accent-color)]" />
                 <span>{user.xp} XP</span>
               </div>

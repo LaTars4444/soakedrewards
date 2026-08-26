@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { TOKEN_RATE } from "@/lib/token-utils";
+import { getMultiplier, getRankIndex } from "@/lib/ranks";
 
 interface ExternalWagerTotal {
   userId: string;
@@ -24,7 +25,9 @@ export async function syncLeaderboardData() {
       const externalLifetime = externalMap.get(user.id);
       const targetLifetime = externalLifetime != null && externalLifetime > user.lifetimeWagered ? externalLifetime : user.lifetimeWagered;
       const lifetimeTokenCredits = user.lifetimeTokenCredits ?? 0;
-      const earnedTokens = Math.floor(targetLifetime / TOKEN_RATE);
+      const rankLevels: Record<string, number> = { bronze: 0, silver: 5, gold: 8, platinum: 10, diamond: 12 };
+      const rankMultiplier = getMultiplier(rankLevels[user.vipTier.toLowerCase()] ?? getRankIndex(0));
+      const earnedTokens = Math.floor((targetLifetime / TOKEN_RATE) * rankMultiplier);
       const tokenDelta = Math.max(0, earnedTokens - lifetimeTokenCredits);
 
       const data: Record<string, unknown> = {};

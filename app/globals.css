@@ -2,18 +2,18 @@
 
 :root {
   color-scheme: dark;
-  --bg-color: #1e1624;
-  --surface-color: #2a1d33;
-  --elevated-color: #3a2746;
-  --accent-color: #a855f7;
-  --primary-color: #7c3aed;
-  --secondary-color: #c084fc;
-  --text-primary: #f5f3ff;
-  --text-secondary: #d6c7f7;
-  --text-muted: #9a8bb0;
-  --border-color: #3b2a4a;
-  --primary-glow: #a855f7;
-  --accent-glow: #c084fc;
+  --bg-color: #100d12;
+  --surface-color: rgba(25, 17, 23, 0.54);
+  --elevated-color: rgba(53, 28, 35, 0.48);
+  --accent-color: #ef4444;
+  --primary-color: #991b1b;
+  --secondary-color: #fca5a5;
+  --text-primary: #fff7f7;
+  --text-secondary: #d8bfc1;
+  --text-muted: #987d80;
+  --border-color: rgba(239, 68, 68, 0.28);
+  --primary-glow: #dc2626;
+  --accent-glow: #f87171;
   font-family: var(--font-exo), ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -24,7 +24,7 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--bg-color);
+  background: transparent;
   color: var(--text-primary);
   font-family: var(--font-exo), ui-sans-serif, system-ui, sans-serif;
 }
@@ -34,5 +34,5 @@ body {
 }
 
 .glow-text {
-  text-shadow: 0 0 18px rgba(168, 85, 247, 0.45);
+  text-shadow: 0 0 18px rgba(248, 113, 113, 0.45);
 }

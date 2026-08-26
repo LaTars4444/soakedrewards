@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
         <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent-color)]">Admin login</p>
         <h1 className="mt-2 text-3xl font-black text-[var(--text-primary)]">Hidden access page</h1>
         <p className="mt-4 text-[var(--text-secondary)]">
-          This page is only accessible by direct URL. Enter the admin password to unlock the WildCS admin dashboard.
+          This page is only accessible by direct URL. Enter the admin password to unlock the Vinzzur Rewards admin dashboard.
         </p>
         {isPasswordNotSet && (
           <div className="mt-6 rounded-xl border border-yellow-500/20 bg-yellow-500/10 p-4 text-sm text-yellow-200">

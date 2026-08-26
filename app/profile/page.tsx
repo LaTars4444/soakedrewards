@@ -10,17 +10,15 @@ type User = {
   username: string;
   tokens: number;
   bonusBalance?: number;
-  linkedKick?: boolean;
   avatar?: string | null;
   xp?: number;
-  clashId?: string;
-  chipsId?: string;
-  daddySkinsId?: string;
+  hellCasinoId?: string;
   totalWagered?: number;
   weeklyWagered?: number;
   monthlyWagered?: number;
   lifetimeWagered?: number;
   lifetimeTokenCredits?: number;
+  password?: string;
 };
 
 export default function ProfilePage() {
@@ -35,10 +33,23 @@ export default function ProfilePage() {
       return null;
     }
   });
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [profileMessage, setProfileMessage] = useState<string | null>(null);
 
   const handleLogout = () => {
     window.localStorage.removeItem("wildcs_user");
     setUser(null);
+  };
+
+  const handleProfileSave = () => {
+    if (!user || !usernameInput.trim()) return;
+    const updated = { ...user, username: usernameInput.trim(), ...(passwordInput ? { password: passwordInput } : {}) };
+    window.localStorage.setItem("wildcs_user", JSON.stringify(updated));
+    setUser(updated);
+    setUsernameInput(updated.username);
+    setPasswordInput("");
+    setProfileMessage("Profile details updated.");
   };
 
   const avatars = ["/avatars/avatar1.svg","/avatars/avatar2.svg","/avatars/avatar3.svg"];
@@ -63,10 +74,9 @@ export default function ProfilePage() {
     reader.readAsDataURL(file);
   };
 
-  const handlePlatformIdUpdate = (platform: "clash" | "chips" | "daddySkins", value: string) => {
+  const handleHellCasinoIdUpdate = (value: string) => {
     if (!user) return;
-    const key = platform === "clash" ? "clashId" : platform === "chips" ? "chipsId" : "daddySkinsId";
-    const updated = { ...user, [key]: value } as User;
+    const updated = { ...user, hellCasinoId: value } as User;
     window.localStorage.setItem("wildcs_user", JSON.stringify(updated));
     setUser(updated);
   };
@@ -104,7 +114,7 @@ export default function ProfilePage() {
       }
 
       const newLifetime = (user.lifetimeWagered ?? 0) + sum;
-      const newLifetimeCredits = earnedTokensFromLifetime(newLifetime);
+      const newLifetimeCredits = earnedTokensFromLifetime(newLifetime, multiplier);
       const previousLifetimeCredits = user.lifetimeTokenCredits ?? 0;
       const lifetimeDelta = Math.max(0, newLifetimeCredits - previousLifetimeCredits);
 
@@ -144,6 +154,15 @@ export default function ProfilePage() {
             </div>
           ) : (
             <div className="mt-6 space-y-6">
+              <div className="border-b border-[var(--border-color)]/70 pb-6">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--accent-color)]">Account details</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  <input value={usernameInput || user.username} onChange={(e) => setUsernameInput(e.target.value)} placeholder="Username" className="rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-2 text-[var(--text-primary)]" />
+                  <input value={passwordInput} onChange={(e) => setPasswordInput(e.target.value)} type="password" placeholder="New password" className="rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-2 text-[var(--text-primary)]" />
+                </div>
+                <button onClick={handleProfileSave} className="mt-3 rounded-full bg-[var(--accent-color)] px-4 py-2 font-semibold text-black">Save account details</button>
+                {profileMessage && <p className="mt-2 text-sm text-[var(--text-secondary)]">{profileMessage}</p>}
+              </div>
               <div className="flex items-center gap-6">
                 <div className="relative h-20 w-20 overflow-hidden rounded-3xl border-2 border-[var(--accent-color)] bg-gradient-to-br from-violet-950 via-fuchsia-900 to-pink-700 p-2 shadow-[0_0_30px_rgba(168,85,247,0.3)]">
                    <Image src={`/ranks/rank-${rankIndex}.svg`} alt={rankName} className="h-full w-full object-cover rounded-2xl" fill sizes="80px" />
@@ -165,38 +184,18 @@ export default function ProfilePage() {
               <p className="text-sm text-[var(--text-secondary)]">Username</p>
               <p className="text-lg font-black">{user.username}</p>
 
-              <p className="text-sm text-[var(--text-secondary)]">Tokens</p>
+              <p className="text-sm text-[var(--text-secondary)]">VinzzurBucks</p>
               <p className="text-xl font-black text-[var(--accent-color)]">{user.tokens}</p>
 
-              <p className="text-sm text-[var(--text-secondary)]">Gaming Platform IDs</p>
+              <p className="text-sm text-[var(--text-secondary)]">HellCasino account</p>
               <div className="mt-2 space-y-3">
                 <div>
-                  <label className="text-xs text-[var(--text-secondary)]">Clash User ID</label>
+                  <label className="text-xs text-[var(--text-secondary)]">HellCasino username or ID</label>
                   <input
                     type="text"
-                    value={user.clashId ?? ""}
-                    onChange={(e) => handlePlatformIdUpdate("clash", e.target.value)}
-                    placeholder="Enter your Clash ID"
-                    className="mt-1 w-full rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-2 text-[var(--text-primary)] outline-none focus:border-[var(--accent-color)]"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs text-[var(--text-secondary)]">Chips User ID</label>
-                  <input
-                    type="text"
-                    value={user.chipsId ?? ""}
-                    onChange={(e) => handlePlatformIdUpdate("chips", e.target.value)}
-                    placeholder="Enter your Chips ID"
-                    className="mt-1 w-full rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-2 text-[var(--text-primary)] outline-none focus:border-[var(--accent-color)]"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs text-[var(--text-secondary)]">Daddy Skins User ID</label>
-                  <input
-                    type="text"
-                    value={user.daddySkinsId ?? ""}
-                    onChange={(e) => handlePlatformIdUpdate("daddySkins", e.target.value)}
-                    placeholder="Enter your Daddy Skins ID"
+                    value={user.hellCasinoId ?? ""}
+                    onChange={(e) => handleHellCasinoIdUpdate(e.target.value)}
+                    placeholder="Add your HellCasino account"
                     className="mt-1 w-full rounded-md border border-[var(--border-color)] bg-[var(--bg-color)] px-3 py-2 text-[var(--text-primary)] outline-none focus:border-[var(--accent-color)]"
                   />
                 </div>
@@ -206,7 +205,7 @@ export default function ProfilePage() {
                 <p className="mt-4 text-sm text-[var(--text-secondary)]">Select avatar</p>
                 <div className="mt-2 grid gap-3 sm:grid-cols-3">
                   {avatars.map((a) => (
-                    <button key={a} onClick={() => handleAvatar(a)} className="rounded-md border p-1">
+                    <button key={a} onClick={() => handleAvatar(a)} className="relative h-12 w-12 rounded-md border p-1">
                         <Image src={a} alt="avatar" className="h-10 w-10 object-cover" fill sizes="40px" />
                     </button>
                   ))}
@@ -228,7 +227,7 @@ export default function ProfilePage() {
 
                 <div className="mt-4">
                   <p className="text-sm text-[var(--text-secondary)]">Import wagers (CSV)</p>
-                  <p className="text-xs text-[var(--text-secondary)]">Upload a CSV exported from your partner account. The importer sums wager amounts and credits lifetime tokens at $7.50 per token and raffle tickets at 1 per $100.</p>
+                  <p className="text-xs text-[var(--text-secondary)]">Upload a CSV exported from your HellCasino account. The importer credits 1 VinzzurBuck per $100 wagered.</p>
                   <div className="mt-2">
                     <input
                       type="file"
@@ -244,7 +243,6 @@ export default function ProfilePage() {
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link href="/store" className="inline-flex rounded-full bg-[var(--accent-color)] px-5 py-3 font-semibold">Redeem tokens</Link>
                 <button onClick={handleLogout} className="text-sm text-[var(--text-secondary)] underline-offset-4 transition hover:text-[var(--text-primary)]">
                   Sign out
                 </button>

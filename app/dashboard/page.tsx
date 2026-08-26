@@ -8,7 +8,7 @@ const sampleUser = {
   weeklyWagered: 4800,
   monthlyWagered: 13200,
   lifetimeWagered: 18250,
-  lifetimeTokenCredits: Math.floor(18250 / 7.5),
+  lifetimeTokenCredits: Math.floor(18250 / 100),
   tokens: 1420,
   bonusBalance: 75,
   watchTime: 895,
@@ -67,9 +67,9 @@ export default function DashboardPage() {
           </div>
           <div className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--surface-color)]/85 p-8 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
             <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent-color)]">Reward store</p>
-            <h2 className="mt-3 text-2xl font-black text-[var(--text-primary)]">Redeem tokens for cash</h2>
+            <h2 className="mt-3 text-2xl font-black text-[var(--text-primary)]">Redeem VinzzurBucks for cash</h2>
             <p className="mt-3 text-[var(--text-secondary)]">
-              Spend earned play and watch tokens on cash vouchers, with items from $5 to $50.
+              Spend your VinzzurBucks on a $5 reward through the Vinzzur store.
             </p>
             <Link
               href="/store"
@@ -79,10 +79,10 @@ export default function DashboardPage() {
             </Link>
           </div>
           <div className="rounded-[2rem] border border-[var(--border-color)] bg-[var(--surface-color)]/85 p-8 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
-            <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent-color)]">Milestones</p>
-            <h2 className="mt-3 text-2xl font-black text-[var(--text-primary)]">Weekly wager targets</h2>
+            <p className="text-sm uppercase tracking-[0.22em] text-[var(--accent-color)]">VinzzurBucks</p>
+            <h2 className="mt-3 text-2xl font-black text-[var(--text-primary)]">Simple earning, clear rewards</h2>
             <p className="mt-3 text-[var(--text-secondary)]">
-              Milestones are based on wagered amounts (e.g., 5k wagered = $5 bonus, 10k wagered = $15 bonus, 20k wagered = $40 bonus).
+              Every $100 wagered earns 1 VinzzurBuck. Redeem 500 VinzzurBucks for a $5 bonus.
             </p>
           </div>
         </section>
